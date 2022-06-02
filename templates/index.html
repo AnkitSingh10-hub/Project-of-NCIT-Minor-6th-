@@ -80,13 +80,9 @@
                         <h2>Brands</h2>
                         <div class="brands-name">
                             <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#"> <span class="pull-right">(50)</span>Acne</a></li>
-                                <li><a href="#"> <span class="pull-right">(56)</span>Grüne Erde</a></li>
-                                <li><a href="#"> <span class="pull-right">(27)</span>Albiro</a></li>
-                                <li><a href="#"> <span class="pull-right">(32)</span>Ronhill</a></li>
-                                <li><a href="#"> <span class="pull-right">(5)</span>Oddmolly</a></li>
-                                <li><a href="#"> <span class="pull-right">(9)</span>Boudestijn</a></li>
-                                <li><a href="#"> <span class="pull-right">(4)</span>Rösch creative culture</a></li>
+                                {% for i in brand %}
+                                <li><a href="/?brand={{i.id}}"> <span class="pull-right">(50)</span>{{i.name}}</a></li>
+                                  {% endfor %}
                             </ul>
                         </div>
                     </div><!--/brands_products-->
@@ -108,6 +104,7 @@
             </div>
 
             <div class="col-sm-9 padding-right">
+                <section id="id">
                 <div class="features_items"><!--features_items-->
                     <h2 class="title text-center">Features Items</h2>
                     {% for prod in product %}
@@ -146,6 +143,7 @@
 
                     {% endfor %}
                 </div><!--features_items-->
+                    </section>
 
                 <div class="category-tab"><!--category-tab-->
                     <div class="col-sm-12">

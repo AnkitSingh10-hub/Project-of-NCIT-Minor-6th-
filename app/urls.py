@@ -19,6 +19,10 @@ urlpatterns = [
     path('plus-cart/<int:cart_id>/', views.plus_cart, name="plus-cart"),
     path('minus-cart/<int:cart_id>/', views.minus_cart, name="minus-cart"),
     #contact page
-#    path('contact', views.Contact_Page, name="contact")
-
+#   path('contact', views.Contact_Page, name="contact")
+    #product page
+    path('product/', views.Product_page, name="product"),
+    path('product/<str:id>', views.Product_Detail, name="product_detail"),
+    #search
+    path('search/', views.Search, name="search"),
 ]

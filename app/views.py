@@ -2,7 +2,7 @@ import decimal
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import RequestContext
-from .models import Category, Product, UserCreateForm, Cart, Address
+from .models import Category, Product, UserCreateForm, Cart, Address, Brand
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
@@ -18,17 +18,21 @@ def Master(request):
 def Index(request):
     obj = Carousel.objects.all()
     category = Category.objects.all()
+    brand = Brand.objects.all()
     product = Product.objects.all()
     categoryID = request.GET.get('category')
+    brandID = request.GET.get('brand')
     if categoryID:
         product = Product.objects.filter(subcategory=categoryID).order_by('-id')
+    elif brandID:
+        product = Product.objects.filter(brand=brandID).order_by('-id')
     else:
         product = Product.objects.all()
-
     context = {
         'category': category,
         'product': product,
-        'obj': obj
+        'obj': obj,
+        'brand': brand
     }
 
     return render(request, 'index.html', context)
@@ -137,8 +141,6 @@ def remove_cart(request, cart_id):
     return redirect('cart')
 
 
-
-
 @login_required(login_url="/signin/")
 def cart(request):
     user = request.user
@@ -187,4 +189,48 @@ def minus_cart(request, cart_id):
             cp.quantity -= 1
             cp.save()
     return redirect('cart')
+
+
+def Product_page(request):
+    category = Category.objects.all()
+    brand = Brand.objects.all()
+    product = Product.objects.all()
+    categoryID = request.GET.get('category')
+    brandID = request.GET.get('brand')
+    if categoryID:
+        product = Product.objects.filter(subcategory=categoryID).order_by('-id')
+    elif brandID:
+        product = Product.objects.filter(brand=brandID).order_by('-id')
+    else:
+        product = Product.objects.all()
+    context = {
+        'category': category,
+        'product': product,
+        'brand': brand,
+    }
+    context = {
+        'category': category,
+        'brand': brand,
+        'product': product
+    }
+    return render(request, "product.html", context)
+
+
+def Product_Detail(request, id):
+    product = Product.objects.get(id=id)
+    context = {
+        'product': product
+    }
+
+    return render(request, "product_detail.html", context)
+
+
+def Search(request):
+    query = request.GET['query']
+    product = Product.objects.filter(name__icontains = query)
+    context = {
+        'product': product,
+    }
+
+    return render(request, "search.html", context)
 
