@@ -1,0 +1,35 @@
+{% extends 'master.html' %}
+{% block body %}
+<section id="form" style="margin-left:30%;">
+   <!--form-->
+   <div class="container">
+   <div class="row">
+   <div class="col-sm-4 col-sm-offset-1">
+      <div class="signup-form">
+         <!--login form-->
+         <h2>Login To Your Account</h2>
+         <form action="" method="POST">
+
+            {% csrf_token %}
+
+            <label for="">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter Your username" Required>
+
+            <label for="">Password</label>
+            <input type="Password" id="password" name="password" placeholder="Enter Your Password" Required>
+
+            <button type="submit">Login</button>
+
+            <a href="{% url 'signup' %}">Create an account</a>
+         </form>
+         {% comment %} now below we print the message if user is already exist or not and also check user email {% endcomment %}
+         <div>
+            {% comment %} here we print the message  {% endcomment %}
+            {% for message in messages %}
+            <h3>{{message}}</h3>
+            {% endfor %}
+         </div>
+      </div>
+   </div>
+</section>
+{% endblock %}
